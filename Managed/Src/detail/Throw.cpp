@@ -5,6 +5,7 @@
 #include "IPC/Exception.h"
 #include <boost/interprocess/exceptions.hpp>
 #include <stdexcept>
+#include <boost/numeric/conversion/converter_policies.hpp>
 #pragma managed(pop)
 
 
