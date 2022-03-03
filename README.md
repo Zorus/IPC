@@ -11,8 +11,8 @@ Integration with [Bond](https://github.com/Microsoft/bond) is available at [IPC.
 
 The library is developed and maintained with [Visual Studio 2019](https://docs.microsoft.com/en-us/visualstudio/windows/?view=vs-2019).
 To get started, open the [IPC.sln](https://github.com/Microsoft/IPC/blob/master/IPC.sln) file and build the solution.
-To build the ArchonIPCNative.nupkg, run the [ArchonIPCNative\build.bat](./blob/master/ArchonIPCNative/build.bat) from Developer Comand Prompt.
-To build the ArchonIPCManaged.nupkg, run the [ArchonIPCManaged\build.bat](./blob/master/ArchonIPCManaged/build.bat) from Developer Comand Prompt.
+To build the ArchonIPCNative.nupkg, run the [ArchonIPCNative\build.bat](./ArchonIPCNative/build.bat) from Developer Comand Prompt.
+To build the ArchonIPCManaged.nupkg, run the [ArchonIPCManaged\build.bat](./ArchonIPCManaged/build.bat) from Developer Comand Prompt.
 The [Boost package](https://www.nuget.org/packages/boost/) will automatically start downloading during the first build.
 
 # Getting Started
