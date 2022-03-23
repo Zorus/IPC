@@ -4,25 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IPC.Managed;
+using ArchonIPC.Managed;
 
 namespace ArchonIPC
 {
     internal class IPCHandler
     {
-        private readonly IDNSRequestHandler _dnsHandler;
-        public IPCHandler(IDNSRequestHandler handler)
+        private readonly IIPCRequestHandler _dnsHandler;
+        private readonly SharedMemory _outMemory;
+        public IPCHandler(IIPCRequestHandler handler, SharedMemory outMemory)
         {
             _dnsHandler = handler;
+            _outMemory = outMemory;
         }
 
         public async Task<Managed.Response> Handle(Managed.Request request)
         {
-            var res = await _dnsHandler.HandleDnsRequest(request.PID, request.PPID
-                    , (DNSEventType)request.EventType, request.CMDLine, request.DomainName);
+            var res = await _dnsHandler.HandleDnsRequest(
+                new ArchonIPC.DNSRequest()
+                {
+                    PID = request.PID, 
+                    EventType = (DNSEventType)request.EventType,
+                    StringParam1 = request.StringParam1,
+                    StringParam2 = request.StringParam2,
+                    UIntParam1 = request.UIntParam1,
+                    UIntParam2 = request.UIntParam2,
+                });
 
-            return new Managed.Response
+            return new Managed.Response(_outMemory)
             {
-                _Response = (Managed.DNSResponse)res
+                Action = (Managed.DNSAction)res.Action,
+                StringParam1 = res.StringParam1,
+                StringParam2 = res.StringParam2,
+                UIntParam1 = res.UIntParam1,
+                UIntParam2 = res.UIntParam2
             };
         }
     }

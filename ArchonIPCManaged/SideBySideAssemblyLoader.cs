@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -30,7 +31,7 @@ namespace ArchonIPC
             var name = GetDLLName(args.Name);
             if (!string.IsNullOrEmpty(name))
             {
-                if (Environment.Is64BitProcess)
+                if (Environment.Is64BitOperatingSystem)
                 {
                     string fileName = System.IO.Path.GetFullPath($"x64\\{name}");
                     System.Console.WriteLine(fileName);

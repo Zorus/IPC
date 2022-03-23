@@ -7,12 +7,18 @@ using ArchonIPC;
 
 namespace IPCServerTest
 {
-    class DNSHandler : IDNSRequestHandler
+    class DNSHandler : IIPCRequestHandler
     {
-        public Task<DNSResponse> HandleDnsRequest(int PID, int PPID, DNSEventType EventType, string CMDLine, string DomainName)
+        public Task<DNSResponse> HandleDnsRequest(DNSRequest request)
         {
-            Console.WriteLine($"Process ID:{PID}, Parent process ID:{PPID}, EventType:{EventType}, CMD line:{CMDLine}, Domain Name: {DomainName}");
-            return Task.FromResult(DNSResponse.Block);
+            Console.WriteLine($"Process ID:{request.PID}, EventType:{request.EventType}, StringParam1: {request.StringParam1}, StringParam2: {request.StringParam2}, UIntParam1: {request.UIntParam1}, UIntParam2: {request.UIntParam2}");
+            return Task.FromResult(new DNSResponse { 
+                Action = DNSAction.Allow,
+                StringParam1 = "Responsed" + request.StringParam1,
+                StringParam2 = "Responsed" + request.StringParam2,
+                UIntParam1 = request.UIntParam1 + 1,
+                UIntParam2 = request.UIntParam2 + 1
+            });
         }
     }
     class Program

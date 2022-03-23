@@ -11,9 +11,9 @@ namespace Managed
         {
             using type = ArchonIPC::Managed::Response^;
 
-            static ArchonIPC::Response From(type% from)
+            static const ArchonIPC::Response& From(type% from)
             {
-                return ArchonIPC::Response{ static_cast<ArchonIPC::DNSResponse>(from->_Response) };
+                return from->Impl;
             }
         };
 
@@ -24,9 +24,7 @@ namespace Managed
 
             static ArchonIPC::Managed::Response^ From(const type& from)
             {
-                auto response = gcnew ArchonIPC::Managed::Response;
-                response->_Response = static_cast<ArchonIPC::Managed::DNSResponse>(from.Response);
-                return response;
+                return gcnew ArchonIPC::Managed::Response{ from };
             }
         };
 

@@ -12,7 +12,7 @@ namespace ArchonIPC
         _getaddrinfoexa = 6,
         _getaddrinfoexw = 7
     };
-    enum class DNSResponse
+    enum class DNSAction
     {
         Allow = 0,
         Block = 1

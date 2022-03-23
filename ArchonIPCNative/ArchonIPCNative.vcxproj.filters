@@ -24,6 +24,9 @@
     <ClInclude Include="SchemaEnum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ClientMessages.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">

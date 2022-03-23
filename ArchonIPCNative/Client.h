@@ -2,6 +2,7 @@
 #include "SchemaEnum.h"
 #include <memory>
 #include <functional>
+#include "ClientMessages.h"
 
 namespace IPC
 {
@@ -21,7 +22,7 @@ namespace ArchonIPC
     {
         public:
             Client(const char* address);
-            DNSResponse SendDnsRequest(int PID, int PPID, DNSEventType EventType, const char* CMDLine, const char* DomainName);
+            DNSResponse SendDnsRequest(const DNSRequest& request);
             void OnDisconnect(std::function<void()> onDisconnect);
         private:
             std::shared_ptr<IPC::Client<Request, Response, IPC::DefaultTraits>> m_client;

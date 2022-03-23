@@ -10,14 +10,19 @@ namespace ArchonIPC
     struct Request
     {
         int PID;
-        int PPID;
         DNSEventType EventType;
-        boost::optional<boost::interprocess::basic_string<char, std::char_traits<char>, IPC::SharedMemory::Allocator<char>>> CMDLine;
-        boost::optional<boost::interprocess::basic_string<char, std::char_traits<char>, IPC::SharedMemory::Allocator<char>>> DomainName;
+        unsigned long long UIntParam1;
+        unsigned long long UIntParam2;
+        boost::optional<boost::interprocess::basic_string<wchar_t, std::char_traits<wchar_t>, IPC::SharedMemory::Allocator<wchar_t>>> StringParam1;
+        boost::optional<boost::interprocess::basic_string<wchar_t, std::char_traits<wchar_t>, IPC::SharedMemory::Allocator<wchar_t>>> StringParam2;
     };
 
     struct Response
     {
-        DNSResponse Response;
+        DNSAction Action;
+        unsigned long long UIntParam1;
+        unsigned long long UIntParam2;
+        boost::optional<boost::interprocess::basic_string<wchar_t, std::char_traits<wchar_t>, IPC::SharedMemory::Allocator<wchar_t>>> StringParam1;
+        boost::optional<boost::interprocess::basic_string<wchar_t, std::char_traits<wchar_t>, IPC::SharedMemory::Allocator<wchar_t>>> StringParam2;
     };
 }

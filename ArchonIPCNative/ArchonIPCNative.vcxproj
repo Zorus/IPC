@@ -131,6 +131,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="ClientMessages.h" />
     <ClInclude Include="Schema.h" />
     <ClInclude Include="SchemaEnum.h" />
   </ItemGroup>

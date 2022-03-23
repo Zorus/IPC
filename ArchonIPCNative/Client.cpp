@@ -11,17 +11,25 @@ namespace ArchonIPC
         m_client = connector();
     }
 
-    DNSResponse Client::SendDnsRequest(int PID, int PPID, DNSEventType EventType, const char* CMDLine, const char* DomainName)
+    DNSResponse Client::SendDnsRequest(const DNSRequest& dnsRequest)
     {
         boost::optional<Response> response;
         Request request;
-        request.PID = PID;
-        request.PPID = PPID;
-        request.EventType = EventType;
-        request.CMDLine.emplace(CMDLine, m_client->GetConnection().GetOutputChannel().GetMemory()->GetAllocator<char>());
-        request.DomainName.emplace(DomainName, m_client->GetConnection().GetOutputChannel().GetMemory()->GetAllocator<char>());
+        request.PID = dnsRequest.PID;
+        request.EventType = dnsRequest.EventType;
+        request.StringParam1.emplace(dnsRequest.StringParam1.c_str(), m_client->GetConnection().GetOutputChannel().GetMemory()->GetAllocator<char>());
+        request.StringParam2.emplace(dnsRequest.StringParam2.c_str(), m_client->GetConnection().GetOutputChannel().GetMemory()->GetAllocator<char>());
+        request.UIntParam1 = dnsRequest.UIntParam1;
+        request.UIntParam2 = dnsRequest.UIntParam2;
         response = (*m_client)(std::move(request)).get();
-        return response->Response;
+        return DNSResponse
+        {
+            response->Action,
+            response->UIntParam1,
+            response->UIntParam2,
+            response->StringParam1.get().c_str(),
+            response->StringParam2.get().c_str()
+        };
     }
 
     void Client::OnDisconnect(std::function<void()> onDisconnect)

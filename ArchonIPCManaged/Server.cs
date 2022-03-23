@@ -24,17 +24,17 @@ namespace ArchonIPC
         private readonly ITransport<Request, Response> _transport;
         private readonly IServersAccessor<Request, Response> _serversAccessor;
 
-        public static Server Create(string address, IDNSRequestHandler requestHandler)
+        public static Server Create(string address, IIPCRequestHandler requestHandler)
         {
             SideBySideAssemblyLoader.Set();
             return new Server(address, requestHandler);
         }
-        private Server(string address, IDNSRequestHandler requestHandler)
+        private Server(string address, IIPCRequestHandler requestHandler)
         {
             _factory = new TransportFactory();
             _factory.Register(typeof(ArchonIPC.Managed.Request).Assembly);
             _transport = _factory.Make<Request, Response>();
-            _serversAccessor = _transport.AcceptServers(address, (inMemory, outMemory) => new IPCHandler(requestHandler).Handle);
+            _serversAccessor = _transport.AcceptServers(address, (inMemory, outMemory) => new IPCHandler(requestHandler, outMemory).Handle);
             _serversAccessor.Error += (obj, err) => Error(obj, new ServerErrorEventArgs(err.Exception));
         }
 

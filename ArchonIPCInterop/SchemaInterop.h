@@ -20,7 +20,7 @@ namespace Managed
         _getaddrinfoexa = 6,
         _getaddrinfoexw = 7
     };
-    public enum class DNSResponse
+    public enum class DNSAction
     {
         Allow = 0,
         Block = 1
@@ -31,17 +31,30 @@ namespace Managed
 #pragma managed(push, off)
         inline void EmplaceRequest(ArchonIPC::Request& request, IPC::SharedMemory& memory)
         {
-            request.CMDLine.emplace(memory.GetAllocator<char>());
-            request.DomainName.emplace(memory.GetAllocator<char>());
+            request.StringParam1.emplace(memory.GetAllocator<wchar_t>());
+            request.StringParam2.emplace(memory.GetAllocator<wchar_t>());
+        }
+        inline void SetStringParam1(ArchonIPC::Request& request, const wchar_t* text)
+        {
+            request.StringParam1->assign(text);
+        }
+        inline void SetStringParam2(ArchonIPC::Request& request, const wchar_t* text)
+        {
+            request.StringParam2->assign(text);
         }
 
-        inline void SetCMDLine(ArchonIPC::Request& request, const char* text)
+        inline void EmplaceResponse(ArchonIPC::Response& response, IPC::SharedMemory& memory)
         {
-            request.CMDLine->assign(text);
+            response.StringParam1.emplace(memory.GetAllocator<wchar_t>());
+            response.StringParam2.emplace(memory.GetAllocator<wchar_t>());
         }
-        inline void SetDomainName(ArchonIPC::Request& request, const char* text)
+        inline void SetStringParam1(ArchonIPC::Response& response, const wchar_t* text)
         {
-            request.DomainName->assign(text);
+            response.StringParam1->assign(text);
+        }
+        inline void SetStringParam2(ArchonIPC::Response& response, const wchar_t* text)
+        {
+            response.StringParam2->assign(text);
         }
 #pragma managed(pop)
     }
@@ -72,19 +85,6 @@ namespace Managed
             }
         }
 
-        property int PPID
-        {
-            int get()
-            {
-                return m_impl->PPID;
-            }
-
-            void set(int value)
-            {
-                m_impl->PPID = value;
-            }
-        }
-
         property DNSEventType EventType
         {
             DNSEventType get()
@@ -98,28 +98,52 @@ namespace Managed
             }
         }
 
-        property System::String^ CMDLine
+        property unsigned long long UIntParam1
         {
-            System::String^ get()
+            unsigned long long get()
             {
-                return m_impl->CMDLine ? msclr::interop::marshal_as<System::String^>(m_impl->CMDLine->c_str()) : nullptr;
+                return m_impl->UIntParam1;
             }
 
-            void set(System::String^ value)
+            void set(unsigned long long value)
             {
-                SetCMDLine(*m_impl, value ? msclr::interop::marshal_context{}.marshal_as<const char*>(value) : "");
+                m_impl->UIntParam1 = value;
             }
         }
-        property System::String^ DomainName
+        property unsigned long long UIntParam2
+        {
+            unsigned long long get()
+            {
+                return m_impl->UIntParam2;
+            }
+
+            void set(unsigned long long value)
+            {
+                m_impl->UIntParam2 = value;
+            }
+        }
+        property System::String^ StringParam1
         {
             System::String^ get()
             {
-                return m_impl->DomainName ? msclr::interop::marshal_as<System::String^>(m_impl->DomainName->c_str()) : nullptr;
+                return m_impl->StringParam1 ? msclr::interop::marshal_as<System::String^>(m_impl->StringParam1->c_str()) : nullptr;
             }
 
             void set(System::String^ value)
             {
-                SetDomainName(*m_impl, value ? msclr::interop::marshal_context{}.marshal_as<const char*>(value) : "");
+                SetStringParam1(*m_impl, value ? msclr::interop::marshal_context{}.marshal_as<const wchar_t*>(value) : L"");
+            }
+        }
+        property System::String^ StringParam2
+        {
+            System::String^ get()
+            {
+                return m_impl->StringParam2 ? msclr::interop::marshal_as<System::String^>(m_impl->StringParam2->c_str()) : nullptr;
+            }
+
+            void set(System::String^ value)
+            {
+                SetStringParam2(*m_impl, value ? msclr::interop::marshal_context{}.marshal_as<const wchar_t*>(value) : L"");
             }
         }
     internal:
@@ -136,9 +160,89 @@ namespace Managed
 
 
     [IPC::Managed::Object]
-    public ref struct Response
+    public ref class Response
     {
-        property DNSResponse _Response;
+    internal:
+        Response(const ArchonIPC::Response& request)
+            : m_impl{ request }
+        {}
+    public:
+        Response(IPC::Managed::SharedMemory^ memory)
+        {
+            EmplaceResponse(*m_impl, *memory->Impl);
+        }
+
+        property DNSAction Action
+        {
+            DNSAction get()
+            {
+                return (ArchonIPC::Managed::DNSAction)m_impl->Action;
+            }
+
+            void set(DNSAction value)
+            {
+                m_impl->Action = (ArchonIPC::DNSAction)value;
+            }
+        }
+
+        property unsigned long long UIntParam1
+        {
+            unsigned long long get()
+            {
+                return m_impl->UIntParam1;
+            }
+
+            void set(unsigned long long value)
+            {
+                m_impl->UIntParam1 = value;
+            }
+        }
+        property unsigned long long UIntParam2
+        {
+            unsigned long long get()
+            {
+                return m_impl->UIntParam2;
+            }
+
+            void set(unsigned long long value)
+            {
+                m_impl->UIntParam2 = value;
+            }
+        }
+        property System::String^ StringParam1
+        {
+            System::String^ get()
+            {
+                return m_impl->StringParam1 ? msclr::interop::marshal_as<System::String^>(m_impl->StringParam1->c_str()) : nullptr;
+            }
+
+            void set(System::String^ value)
+            {
+                SetStringParam1(*m_impl, value ? msclr::interop::marshal_context{}.marshal_as<const wchar_t*>(value) : L"");
+            }
+        }
+        property System::String^ StringParam2
+        {
+            System::String^ get()
+            {
+                return m_impl->StringParam2 ? msclr::interop::marshal_as<System::String^>(m_impl->StringParam2->c_str()) : nullptr;
+            }
+
+            void set(System::String^ value)
+            {
+                SetStringParam2(*m_impl, value ? msclr::interop::marshal_context{}.marshal_as<const wchar_t*>(value) : L"");
+            }
+        }
+    internal:
+        property ArchonIPC::Response& Impl
+        {
+            ArchonIPC::Response& get()
+            {
+                return *m_impl;
+            }
+        }
+    private:
+        IPC::Managed::detail::NativeObject<ArchonIPC::Response> m_impl;
     };
 }
 }

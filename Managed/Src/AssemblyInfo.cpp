@@ -15,4 +15,4 @@ using namespace System::Runtime::InteropServices;
 
 [assembly:ComVisible(false)];
 
-[assembly:AssemblyVersionAttribute("1.0.*")];
+[assembly:AssemblyVersionAttribute("1.0.0")];
