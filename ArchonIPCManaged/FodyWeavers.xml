@@ -1,0 +1,5 @@
+﻿<Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FodyWeavers.xsd">
+  <Costura 
+	Unmanaged32Assemblies='ArchonIPCInterop|IPC.Managed|IPC.Containers.Managed' 
+    Unmanaged64Assemblies='ArchonIPCInterop|IPC.Managed|IPC.Containers.Managed'/>
+</Weavers>

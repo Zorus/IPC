@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Schema.h"
 #include <IPC/Managed/detail/Interop/TransportImpl.h>
 

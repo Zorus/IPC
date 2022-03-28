@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "SchemaInterop.h"
 #include <IPC/Managed/detail/TransportImpl.h>
 namespace IPC

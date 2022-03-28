@@ -26,7 +26,6 @@ namespace ArchonIPC
 
         public static Server Create(string address, IIPCRequestHandler requestHandler)
         {
-            SideBySideAssemblyLoader.Set();
             return new Server(address, requestHandler);
         }
         private Server(string address, IIPCRequestHandler requestHandler)
