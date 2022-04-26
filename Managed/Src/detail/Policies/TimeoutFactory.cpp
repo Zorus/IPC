@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "IPC/Managed/detail/Policies/TimeoutFactory.h"
 #include "detail/ThreadDetector.h"
 #include "IPC/Managed/detail/NativeObject.h"

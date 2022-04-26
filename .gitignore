@@ -23,6 +23,7 @@
 *.la
 *.a
 *.lib
+!lib/*.lib
 
 # Executables
 *.exe
@@ -40,3 +41,12 @@
 
 # Build folders
 **/x64
+**/x86
+**/ARM
+**/ARM64
+**/obj
+**/bin
+**/Win32
+**/x64
+**/ARM
+**/ARM64
