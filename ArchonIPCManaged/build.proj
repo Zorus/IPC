@@ -1,0 +1,46 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <ItemGroup>
+    <Managed Include="..\Managed\Build\Managed.vcxproj" />
+	<Transport Include="..\Transport\Transport.csproj" />
+	<NativeMD Include="..\NativeMD\Build\NativeMD.vcxproj" />
+	<InteropMD Include="..\InteropMD\Build\InteropMD.vcxproj" />
+	<NativeContainers Include="..\NativeContainers\Build\NativeContainers.vcxproj" />
+	<ManagedContainers Include="..\ManagedContainers\Build\ManagedContainers.vcxproj" />
+	<Object Include="..\Object\Object.csproj" />
+	<ArchonIPCManaged Include="..\ArchonIPCManaged\ArchonIPCManaged.csproj" />
+	<ArchonIPCInterop Include="..\ArchonIPCInterop\ArchonIPCInterop.vcxproj" />
+  </ItemGroup>
+  <Target Name="BuildArchonIPCManaged" DependsOnTargets="BuildArchonIPCInterop;BuildManagedContainers">
+    <MSBuild Projects="@(ArchonIPCManaged)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=AnyCPU;BuildProjectReferences=false" Targets="Build" />
+  </Target>
+  <Target Name="BuildManagedContainers" DependsOnTargets="BuildObject;BuildNativeContainers">
+    <MSBuild Projects="@(ManagedContainers)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=Win32;BuildProjectReferences=false" Targets="Build" />
+	<MSBuild Projects="@(ManagedContainers)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=x64;BuildProjectReferences=false" Targets="Build" />
+  </Target>
+  <Target Name="BuildNativeContainers" DependsOnTargets="BuildObject;BuildTransport;BuildManaged">
+    <MSBuild Projects="@(NativeContainers)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=Win32;BuildProjectReferences=false" Targets="Build" />
+	<MSBuild Projects="@(NativeContainers)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=x64;BuildProjectReferences=false" Targets="Build" />
+  </Target>
+  <Target Name="BuildArchonIPCInterop" DependsOnTargets="BuildObject;BuildTransport;BuildManaged">
+    <MSBuild Projects="@(ArchonIPCInterop)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=Win32;BuildProjectReferences=false" Targets="Build" />
+	<MSBuild Projects="@(ArchonIPCInterop)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=x64;BuildProjectReferences=false" Targets="Build" />
+  </Target>
+  <Target Name="BuildTransport" DependsOnTargets="BuildObject">
+    <MSBuild Projects="@(Transport)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=AnyCPU;BuildProjectReferences=false" Targets="Build" />
+  </Target>
+  <Target Name="BuildObject" DependsOnTargets="BuildManaged">
+    <MSBuild Projects="@(Object)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=AnyCPU;BuildProjectReferences=false" Targets="Build" />
+  </Target>
+  <Target Name="BuildManaged" DependsOnTargets="BuildNativeMD;BuildInteropMD">
+    <MSBuild Projects="@(Managed)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=Win32;BuildProjectReferences=false" Targets="Build" />
+	<MSBuild Projects="@(Managed)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=x64;BuildProjectReferences=false" Targets="Build" />
+  </Target>
+  <Target Name="BuildNativeMD">
+    <MSBuild Projects="@(NativeMD)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=Win32;BuildProjectReferences=false" Targets="Build" />
+	<MSBuild Projects="@(NativeMD)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=x64;BuildProjectReferences=false" Targets="Build" />
+  </Target>
+  <Target Name="BuildInteropMD">
+    <MSBuild Projects="@(InteropMD)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=Win32;BuildProjectReferences=false" Targets="Build" />
+	<MSBuild Projects="@(InteropMD)" BuildInParallel="$(BuildInParallel)" Properties="Configuration=Release;Platform=x64;BuildProjectReferences=false" Targets="Build" />
+  </Target>
+</Project>

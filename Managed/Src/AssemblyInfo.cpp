@@ -1,3 +1,4 @@
+#include "stdafx.h"
 using namespace System;
 using namespace System::Reflection;
 using namespace System::Runtime::InteropServices;
@@ -15,4 +16,4 @@ using namespace System::Runtime::InteropServices;
 
 [assembly:ComVisible(false)];
 
-[assembly:AssemblyVersionAttribute("1.0.*")];
+[assembly:AssemblyVersionAttribute("1.0.0")];

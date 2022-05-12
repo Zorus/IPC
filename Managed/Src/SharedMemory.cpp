@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Exception.h"
 #include "SharedMemory.h"
 #include "IPC/Managed/detail/Throw.h"

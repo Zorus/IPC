@@ -27,7 +27,15 @@ namespace IPC
         };
 
         using ManagedSharedMemory = detail::ipc::basic_managed_windows_shared_memory<
-            char, detail::ipc::rbtree_best_fit<MutexFamily>, detail::ipc::iset_index>;
+            char, 
+            detail::ipc::rbtree_best_fit<MutexFamily,
+                detail::ipc::offset_ptr<
+                    void,
+                    __int64,
+                    unsigned __int64,
+                    0>,
+                0>,
+            detail::ipc::iset_index>;
 
     public:
         using Handle = ManagedSharedMemory::handle_t;

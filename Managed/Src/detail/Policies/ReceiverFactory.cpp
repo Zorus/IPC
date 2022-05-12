@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "IPC/Managed/detail/Policies/ReceiverFactory.h"
 
 #include "Exception.h"

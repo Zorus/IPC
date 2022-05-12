@@ -19,6 +19,7 @@
     <ClCompile Include="..\Src\detail\Policies\WaitHandleFactory.cpp">
       <Filter>detail\Policies</Filter>
     </ClCompile>
+    <ClCompile Include="..\Src\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Inc\Exception.h" />
@@ -95,6 +96,7 @@
     <ClInclude Include="..\..\Inc\IPC\Managed\detail\AccessorBase.h">
       <Filter>detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\Src\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="detail">

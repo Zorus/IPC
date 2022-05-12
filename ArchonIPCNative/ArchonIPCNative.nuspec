@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package >
+    <metadata>
+        <id>ArchonIPCNative</id>
+        <version>1.00.00</version>
+        <description>Microsoft IPC implementation for ArchonAPC project.</description>
+        <tags>Native, native</tags>
+		<authors>Zorus</authors>
+		<dependencies>
+			<dependency id="boost_thread-vc142" version="1.72.0" />
+			<dependency id="boost_date_time-vc142" version="1.72.0" />
+		</dependencies>
+    </metadata>
+     
+    <files>
+        <file src="bin\Release\ARM64\*.*"  		target="lib\native\Release\ARM64"	/>
+		<file src="bin\Release\ARM\*.*"  		target="lib\native\Release\ARM"     />
+		<file src="bin\Release\x86\*.*"  		target="lib\native\Release\x86"     />
+		<file src="bin\Release\x64\*.*"  		target="lib\native\Release\x64"     />
+		<file src="bin\Debug\ARM64\*.*"  		target="lib\native\Debug\ARM64"		/>
+		<file src="bin\Debug\ARM\*.*"  			target="lib\native\Debug\ARM"     	/>
+		<file src="bin\Debug\x86\*.*"  			target="lib\native\Debug\x86"     	/>
+		<file src="bin\Debug\x64\*.*"  			target="lib\native\Debug\x64"     	/>
+		<file src="..\lib\*.*"  				target="lib\native\"     			/>
+        <file src="*.h"   						target="lib\native\include" 		/>
+        <file src="ArchonIPCNative.targets"   	target="build" 						/>
+    </files>
+</package>

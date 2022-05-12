@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>ArchonIPCManaged</id>
+    <version>1.00.00</version>
+	<description>Microsoft IPC implementation for ArchonAPC project.</description>
+	<tags>Managed, managed</tags>
+	<authors>Zorus</authors>
+	<dependencies>
+      <group targetFramework=".NETFramework4.6.2" />
+    </dependencies>
+  </metadata>
+  <files>
+	<file src="..\bin\Release\*.dll"  			target="lib\native"     	/>
+	<file src="ArchonIPCManaged.targets"   		target="build" 				/>
+  </files>
+</package>
